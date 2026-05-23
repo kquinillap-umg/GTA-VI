@@ -1,0 +1,58 @@
+<section class="final-message absolute w-full h-dvh overflow-hidden z-50 opacity-100">
+  <div class="h-full col-center gap-10">
+    <img
+      src="/images/logo.webp"
+      alt="logo"
+      class="2xl:w-72 3xl:w-80 md:w-62 w-auto
+      relative xs:top-[9.5rem] sm:top-[12.8rem]
+      md:top-[8.5rem] 2xl:top-44 3xl:top-48 left-1/2 -translate-x-1/2 mt-2.5"
+    />
+
+    <div class="mt-40">
+      <h1
+        class="gradient-title md:text-[7rem] text-7xl font-round-bold font-extrabold uppercase md:leading-24 leading-[4.5rem] text-center
+			bg-gradient-to-t from-orange-300 via-red-400 to-pink-500 bg-clip-text text-transparent"
+      >
+        disponible<br />el 19 de noviembre<br />de 2026
+      </h1>
+    </div>
+
+    <div class="flex justify-center items-center gap-10 mt-8">
+      <img src="/images/ps5-logo.svg" class="md:w-32 w-20" />
+      <img src="/images/xbox-logo.svg" class="md:w-52 w-40" />
+    </div>
+  </div>
+</section>
+
+<style scoped>
+  .pronto {
+    mask-image: radial-gradient(circle at 50% 100vh, black 0%, transparent 0%);
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+  }
+
+  .pronto-logo {
+    top: 20%;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.set('.final-message', { marginTop: '-100vh', opacity: 0 });
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.final-message',
+      start: 'top 40%',
+      end: 'top 10%',
+      scrub: 2,
+    },
+  });
+
+  tl.to('.final-content', { opacity: 0, duration: 2, ease: 'power1.inOut' });
+  tl.to('.final-message', { opacity: 1, duration: 1, ease: 'power1.inOut' });
+</script>

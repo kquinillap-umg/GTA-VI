@@ -1,0 +1,126 @@
+---
+import Pronto from './message1.astro';
+import ViLogocud from 'public/images/logo-cutted.astro';
+import PlayButtonIcon from 'public/images/play-button.svg';
+---
+
+<section class="banner-hero w-dvw h-dvh relative overflow-hidden">
+  <div class="size-full mask-wrapper relative">
+    <img
+      src="/images/hero-bg.webp"
+      alt="background"
+      class="scale-out object-cover h-full md:scale-125"
+    />
+    <img
+      src="/images/hero-text.webp"
+      alt="hero-logo"
+      class="title-logo fade-out absolute h-full top-0 object-cover md:scale-125"
+    />
+  </div>
+  <div class="fade-out absolute bottom-5 left-1/2 -translate-x-1/2">
+    <ViLogocud alt="trailer" class="w-39" />
+    <span
+      class="absolute uppercase tracking-[6px] whitespace-nowrap text-center top-10.5 font-medium text-shadow-[0_0_2px_rgba(255,255,255,0.5)] left-1/2 -translate-x-1/2"
+    >
+      Ver El Tráiler 2
+    </span>
+  </div>
+  <button
+    class="fade-out absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer pointer-events-auto hover:scale-110 transition-transform duration-500 z-50"
+  >
+    <PlayButtonIcon
+      id="hero-play-button"
+      class="mt-11 text-white size-25 backdrop-blur-3xl rounded-full"
+    />
+  </button>
+
+  <div>
+    <img src="/images/textogtafull.svg" alt="logo" class="size-full object-cover mask-logo" />
+  </div>
+  <Pronto />
+</section>
+
+<style scoped>
+  .banner-hero {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  .mask-wrapper {
+    mask-image: url('/images/textogtafull.svg');
+    mask-repeat: no-repeat;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { getMaskSettings } from '../utils/utils.js';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const { initialMaskPos, initialMaskSize, maskSize } = getMaskSettings();
+
+  gsap.set('.mask-wrapper', {
+    maskPosition: initialMaskPos,
+    maskSize: initialMaskSize,
+    background: 'transparent',
+  });
+
+  gsap.set('.mask-logo', { marginTop: '-100vh', opacity: 0 });
+  gsap.set('.pronto', {
+    marginTop: '0vh',
+    backgroundImage: 'linear-gradient(to top, #a34da3, #a34da3 , #a34da3',
+    webkitBackgroundClip: 'text',
+    backgroundClip: 'text',
+    webkitTextFillColor: 'transparent',
+  });
+
+  const coloresGradiente = {
+    color1: '#a34da3',
+    color2: '#a34da3',
+    color3: '#a34da3',
+  };
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.banner-hero',
+      start: 'top top',
+      scrub: 2.5,
+      end: '+=200%',
+      pin: true,
+    },
+  });
+
+  tl.to('.fade-out', { opacity: 0, ease: 'power1.inOut' })
+    .to('.scale-out', { scale: 1, ease: 'power1.inOut' })
+    .to('.mask-wrapper', { backgroundColor: '#ffffff', duration: 0.5, ease: 'power1.inOut' }, '<')
+    .to(['.scale-out', '.title-logo'], { opacity: 0, ease: 'power1.inOut' }, '<')
+    .to('.mask-wrapper', { maskSize, ease: 'power1.inOut' }, '<')
+    .to(
+      '.pronto',
+      {
+        duration: 3,
+        ease: 'power1.inOut',
+        maskImage: 'radial-gradient(circle at 50% 0vh, black 50%, transparent 100%)',
+      },
+      '<'
+    )
+    .to(
+      coloresGradiente,
+      {
+        duration: 3,
+        ease: 'power1.inOut',
+        color1: '#b35300',
+        color2: '#fda300',
+        color3: '#99004c',
+
+        onUpdate: () => {
+          gsap.set('.pronto', {
+            backgroundImage: `linear-gradient(to top, ${coloresGradiente.color1}, ${coloresGradiente.color2}, ${coloresGradiente.color3})`,
+          });
+        },
+      },
+      '<'
+    );
+</script>

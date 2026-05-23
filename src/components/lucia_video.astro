@@ -1,0 +1,45 @@
+<section class="lucia relative">
+  <div class="h-dvh">
+    <video
+      id="second-video"
+      muted
+      playsinline
+      preload="auto"
+      src="/videos/lucia.mp4"
+      class="size-full object-cover second-vd"
+      style="object-position: 15% 0%"></video>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.set('.lucia', { marginTop: '-60vh', opacity: 0 });
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.lucia',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 2,
+      pin: true,
+    },
+  });
+
+  tl.to('.lucia', { opacity: 1, duration: 1, ease: 'power1.inOut' });
+
+  const video = document.querySelector<HTMLVideoElement>('#second-video');
+  if (video) {
+    const addTween = () => {
+      tl.to(video, { currentTime: video.duration, duration: 3, ease: 'power1.inOut' }, '<');
+    };
+    if (video.readyState >= 1) {
+      addTween();
+    } else {
+      video.addEventListener('loadedmetadata', addTween, { once: true });
+    }
+  }
+</script>

@@ -1,0 +1,19 @@
+---
+import ViLogo from 'public/images/vi-logo.astro';
+import Menuicon from 'public/images/menu.astro';
+---
+
+<nav class="mx-auto">
+  <ViLogo
+    class="size-9 text-white hover:text-yellow-100 transition-colors duration-500 cursor-pointer"
+  />
+  <Menuicon class="size-9 hover:text-yellow-100 transition-colors duration-500 cursor-pointer" />
+</nav>
+
+<style scoped>
+  @import 'tailwindcss';
+
+  nav {
+    @apply fixed top-0 left-0 w-full flex justify-between items-center md:p-16 p-5 z-[100];
+  }
+</style>
